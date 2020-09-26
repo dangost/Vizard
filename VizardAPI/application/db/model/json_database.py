@@ -1,13 +1,15 @@
 from application.db.abstract.base_database import BaseDatabase
-import zipfile
+from zipfile import ZipFile
+import json
 
 
 class JsonDatabase(BaseDatabase):
-    base: zipfile
+    base: ZipFile
 
     def __init__(self, base_path: str):
         try:
-            self.base = open(base_path)
+            self.base = ZipFile(base_path, 'r')
+
             pass
         except FileExistsError:
             self.create_base()
@@ -15,7 +17,9 @@ class JsonDatabase(BaseDatabase):
         pass
 
     def load(self):
-        pass
+        games_json: dict = json.load(self.base.open(self.games_path))
+        studios_json: dict = json.load(self.base.open(self.studios_path))
+        genres_json: dict = json.load(self.base.open(self.genres_path))
 
     def save(self):
         pass
