@@ -2,6 +2,8 @@ from application.db.model.json_database import JsonDatabase
 
 
 class GenreRepository:
+    base = 1
+
     def get_all_genres(self):
         pass
 
