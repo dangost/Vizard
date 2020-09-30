@@ -3,7 +3,7 @@ from application.entities.genres.model import Genre
 
 
 class GenresSchema(Schema):
-    id = fields.Integer(data_key="id")
+    genre_id = fields.Integer(data_key="id")
 
     name = fields.String(data_key="name")
 

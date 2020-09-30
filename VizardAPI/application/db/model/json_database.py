@@ -9,11 +9,15 @@ import json
 class JsonDatabase(BaseDatabase):
     base: ZipFile
 
+    games_path: str = "games.json"
+    studios_path: str = "studios.json"
+    genres_path: str = "genres.json"
+
     def __init__(self, base_path: str):
         try:
             self.base = ZipFile(base_path, 'r')
 
-        except FileExistsError:
+        except FileNotFoundError:
             self.create_base(base_path)
 
     def load(self):
@@ -21,25 +25,13 @@ class JsonDatabase(BaseDatabase):
         studios_json: dict = json.load(self.base.open(self.studios_path))
         genres_json: dict = json.load(self.base.open(self.genres_path))
 
-        # serializing to lists
-        temp = []
+        # deserializing
 
-        for each in games_json:
-            temp.append(GamesSchema.load_game(each))
+        self.games = GamesSchema(many=True).load(games_json)
 
-        self.games = temp
-        temp = []
+        self.studios = StudiosSchema(many=True).load(studios_json)
 
-        for each in studios_json:
-            temp.append(StudiosSchema.load_studio(each))
-        self.studios = temp
-        temp = []
-
-        for each in genres_json:
-            temp.append(GenresSchema.load_genre(each))
-        self.genres = temp
-        temp = []
-        del temp
+        self.genres = StudiosSchema(many=True).load(genres_json)
 
     def save(self):
         pass
@@ -50,3 +42,4 @@ class JsonDatabase(BaseDatabase):
         base.write(self.games_path)
         base.write(self.studios_path)
         base.write(self.genres_path)
+        base.close()

@@ -5,11 +5,11 @@ from.schema import GenresSchema
 genres_controller_api = Blueprint('genres_controller_api', __name__)
 
 
-@genres_controller_api.route("/Genres/", methods=['GET'])
+@genres_controller_api.route("/api/Genres/", methods=['GET'])
 def test():
-    return "test"
+    return "genre"
 
 
-@genres_controller_api.route("/Genres/<int:genre_id>", methods=['GET'])
-def test(genre_id):
-    return "test" + genre_id
+@genres_controller_api.route("/api/Genres/<int:genre_id>", methods=['GET'])
+def test_id(genre_id):
+    return "genre " + genre_id

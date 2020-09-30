@@ -3,9 +3,9 @@ from application.entities.games.model import Game
 
 
 class GamesSchema(Schema):
-    id = fields.Integer(data_key="id")
+    game_id = fields.Integer(data_key="id")
 
-    name = fields.Integer(data_key="name")
+    name = fields.String(data_key="name")
 
     avatar = fields.String(data_key="avt")  # picture link
 
@@ -18,6 +18,10 @@ class GamesSchema(Schema):
     rate = fields.Float(data_key="rt")
 
     price = fields.Float(data_key="prc")
+
+    studio_id = fields.Integer(data_key="stdId")
+
+    genre_id = fields.Integer(data_key="gnrId")
 
     @post_load
     def load_game(self, data, **kwargs):

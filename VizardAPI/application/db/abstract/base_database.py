@@ -7,10 +7,6 @@ class BaseDatabase:
     studios: list
     genres: list
 
-    games_path: str = "games.json"
-    studios_path: str = "studios.json"
-    genres_path: str = "genres.json"
-
     @abstractmethod
     def load(self):
         pass

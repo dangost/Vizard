@@ -8,7 +8,7 @@ class GamesRepository:
     def get_id_game(self):
         pass
 
-    def post_game(self):
+    def post_game(self, json_data: dict):
         pass
 
     def delete_game(self, game_id: int):

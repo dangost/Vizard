@@ -1,8 +1,8 @@
 class Studio:
     def __init__(self, studio_id, name):
-        self.id = studio_id
+        self.studio_id = studio_id
         self.name = name
 
-    id: int
+    studio_id: int
 
     name: str

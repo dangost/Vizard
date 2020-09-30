@@ -5,13 +5,13 @@ from.schema import StudiosSchema
 studios_controller_api = Blueprint('studios_controller_api', __name__)
 
 
-@studios_controller_api.route("/Studios/", methods=['GET'])
+@studios_controller_api.route("/api/Studios/", methods=['GET'])
 def test():
-    return "test"
+    return "studio"
 
 
-@studios_controller_api.route("/Studios/<int:std_id>", methods=['GET'])
-def test(std_id):
-    return "test" + std_id
+@studios_controller_api.route("/api/Studios/<int:std_id>", methods=['GET'])
+def test_id(std_id):
+    return "studio " + std_id
 
 
