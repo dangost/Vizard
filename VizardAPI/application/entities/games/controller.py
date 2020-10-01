@@ -8,7 +8,6 @@ from application.db.abstract.base_database import BaseDatabase
 games_controller_api = Blueprint('games_controller_api', __name__)
 
 
-
 @games_controller_api.route("/api/Games", methods=['GET'])
 def get_all_games():
     return
