@@ -3,7 +3,7 @@ from application.db.model.orm.base import Base
 
 
 class Genre(Base):
-    __tablename__ = "Games"
+    __tablename__ = "Genres"
 
     def __init__(self, genre_id, name, description):
         self.genre_id = genre_id

@@ -1,7 +1,7 @@
 from application.db.abstract.base_database import BaseDatabase
-from application.entities.games.schema import GamesSchema, Game
-from application.entities.genres.schema import GenresSchema, Genre
-from application.entities.studios.schema import StudiosSchema, Studio
+from application.entities.games.schema import Game
+from application.entities.genres.schema import Genre
+from application.entities.studios.schema import Studio
 from zipfile import ZipFile
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
@@ -16,7 +16,7 @@ class JsonDatabase(BaseDatabase):
     studios_path: str = "studios.json"
     genres_path: str = "genres.json"
 
-    engine: create_engine()
+    engine = 1
 
     def __init__(self, base_path: str):
         self.engine = create_engine('sqlite:///' + base_path, echo=True)
@@ -25,7 +25,7 @@ class JsonDatabase(BaseDatabase):
         Base.metadata.create_all(self.engine)
         _session = sessionmaker()
         _session.configure(bind=self.engine)
-        session = _session()
+        self.session = _session()
 
         # games_json: dict = json.load(self.base.open(self.games_path))
         # studios_json: dict = json.load(self.base.open(self.studios_path))
