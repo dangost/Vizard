@@ -1,4 +1,4 @@
-from application.db.model.json_database import JsonDatabase
+from application.db.model.database import JsonDatabase
 
 
 class GenreRepository:

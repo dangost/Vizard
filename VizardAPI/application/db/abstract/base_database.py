@@ -14,7 +14,3 @@ class BaseDatabase:
     @abstractmethod
     def save(self):
         pass
-
-    @abstractmethod
-    def create_base(self, path: str):
-        pass

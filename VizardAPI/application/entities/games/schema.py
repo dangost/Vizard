@@ -11,6 +11,10 @@ class GamesSchema(Schema):
 
     trailer = fields.String(data_key="tr")  # yt link
 
+    description = fields.String(data_key="desc")
+
+    platform = fields.String(data_key="os")
+
     steam = fields.String(data_key="stm")  # steam link
 
     torrent = fields.String(data_key="trr")  # torrent link
@@ -22,6 +26,8 @@ class GamesSchema(Schema):
     studio_id = fields.Integer(data_key="stdId")
 
     genre_id = fields.Integer(data_key="gnrId")
+
+    system_requirements = fields.String(data_key="sys")
 
     @post_load
     def load_game(self, data, **kwargs):

@@ -1,9 +1,17 @@
-class Game:
+from sqlalchemy import Column, Integer, String, Float, ForeignKey
+from application.db.model.orm.base import Base
 
-    def __init__(self, game_id, name, avatar, trailer, steam, torrent, rate, price, studio_id, genre_id):
+
+class Game(Base):
+    __tablename__ = "Games"
+
+    def __init__(self, game_id, name, avatar, trailer, description, platform, steam, torrent, rate,
+                 price, studio_id, genre_id, system_requirements):
         self.game_id = game_id
         self.name = name
         self.avatar = avatar
+        self.description = description
+        self.platform = platform
         self.trailer = trailer
         self.steam = steam
         self.torrent = torrent
@@ -11,23 +19,30 @@ class Game:
         self.price = price
         self.studio_id = studio_id
         self.genre_id = genre_id
+        self.system_requirements = system_requirements
 
-    game_id: int
+    game_id = Column("id", Integer, primary_key=True)
 
-    name: str
+    name = Column("name", String)
 
-    avatar: str  # picture link
+    avatar = Column("avatar", String)  # picture link
 
-    trailer: str  # yt link
+    trailer = Column("trailer", String)  # yt link
 
-    steam: str  # steam link
+    description = Column("description", String)
 
-    torrent: str  # torrent link
+    platform = Column("platform", String)
 
-    rate: str
+    steam = Column("steam", String)  # steam link
 
-    price: str
+    torrent = Column("torrent", String)  # torrent link
 
-    studio_id: int
+    rate = Column("rate", Float)
 
-    genre_id: int
+    price = Column("price", Float)
+
+    studio_id = Column("studioId", Integer, ForeignKey("Studios.id"))
+
+    genre_id = Column("genreId", Integer, ForeignKey("Genres.id"))
+
+    system_requirements = Column("systemReq", String)

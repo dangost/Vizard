@@ -7,6 +7,8 @@ class GenresSchema(Schema):
 
     name = fields.String(data_key="name")
 
+    description = fields.String(data_key="desc")
+
     @post_load
     def load_genre(self, data, **kwargs):
         return Genre(**data)
