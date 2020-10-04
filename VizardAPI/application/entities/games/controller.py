@@ -1,21 +1,24 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 from .model import Game
 from .schema import GamesSchema
 from .repository import GamesRepository
-from application.db.abstract.base_database import BaseDatabase
 
+
+rep = GamesRepository()
 
 games_controller_api = Blueprint('games_controller_api', __name__)
 
 
 @games_controller_api.route("/api/Games", methods=['GET'])
 def get_all_games():
-    return
+    data = rep.get_all_games()
+    return jsonify(GamesSchema(many=True).dump(data))
 
 
 @games_controller_api.route("/api/Games/<int:game_id>", methods=['GET'])
 def get_game_id(game_id):
-    return
+    obj = get_game_id(game_id)
+    return str(GamesSchema(many=False).dump(obj))
 
 
 @games_controller_api.route("/api/Games", methods=['POST'])

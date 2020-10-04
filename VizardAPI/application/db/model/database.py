@@ -9,12 +9,12 @@ import json
 from application.db.model.orm.base import Base
 
 
-class JsonDatabase(BaseDatabase):
+class Database(BaseDatabase):
     session: sessionmaker()
 
-    games_path: str = "games.json"
-    studios_path: str = "studios.json"
-    genres_path: str = "genres.json"
+    # games_path: str = "games.json"
+    # studios_path: str = "studios.json"
+    # genres_path: str = "genres.json"
 
     engine = 1
 
@@ -27,16 +27,10 @@ class JsonDatabase(BaseDatabase):
         _session.configure(bind=self.engine)
         self.session = _session()
 
-        # games_json: dict = json.load(self.base.open(self.games_path))
-        # studios_json: dict = json.load(self.base.open(self.studios_path))
-        # genres_json: dict = json.load(self.base.open(self.genres_path))
-
-        # deserializing
+        self.initialize()
 
         self.games = self.session.query(Game).all()
-
         self.studios = self.session.query(Studio).all()
-
         self.genres = self.session.query(Genre).all()
 
     def save(self):
@@ -48,4 +42,13 @@ class JsonDatabase(BaseDatabase):
         self.session.query(Studio).add_all(self.studios)
         self.session.query(Genre).add_all(self.genres)
 
+        self.session.commit()
+
+    def initialize(self):
+        genre = Genre("Action", "Description")
+        studio = Studio("Rockstar Game", "avatar", "description")
+        game = Game("name", "avarat", "trailer", "description", "android", "steam", "torrent", 9.0, 10.0, 0, 0, "pent")
+
+        self.session.add(genre)
+        self.session.add(game)
         self.session.commit()

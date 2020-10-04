@@ -3,7 +3,7 @@ from application.entities.studios.model import Studio
 
 
 class StudiosSchema(Schema):
-    studio_id = fields.Integer(data_key="id")
+    studio_id = fields.Integer(data_key="id", required=False)
 
     name = fields.String(data_key="name")
 

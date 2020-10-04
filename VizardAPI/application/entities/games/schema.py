@@ -1,9 +1,9 @@
-from marshmallow import fields, Schema, post_load
+from marshmallow import fields, Schema, post_load, post_dump
 from application.entities.games.model import Game
 
 
 class GamesSchema(Schema):
-    game_id = fields.Integer(data_key="id")
+    game_id = fields.Integer(data_key="id", required=False)
 
     name = fields.String(data_key="name")
 
