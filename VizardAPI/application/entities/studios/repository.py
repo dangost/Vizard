@@ -1,7 +1,7 @@
 from application.db.model.database import Database
 
 
-class StudiosRepository:
+class StudiosRepository:    # todo realize studios repository
     def get_all_studios(self):
         pass
 

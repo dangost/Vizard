@@ -15,9 +15,9 @@ class GamesSchema(Schema):
 
     platform = fields.String(data_key="os")
 
-    steam = fields.String(data_key="stm")  # steam link
+    steam = fields.String(data_key="stm", required=False)  # steam link
 
-    torrent = fields.String(data_key="trr")  # torrent link
+    torrent = fields.String(data_key="trr", required=False)  # torrent link
 
     rate = fields.Float(data_key="rt")
 
@@ -27,7 +27,7 @@ class GamesSchema(Schema):
 
     genre_id = fields.Integer(data_key="gnrId")
 
-    system_requirements = fields.String(data_key="sys")
+    system_requirements = fields.String(data_key="sys", required=False)
 
     @post_load
     def load_game(self, data, **kwargs):

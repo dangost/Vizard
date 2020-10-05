@@ -1,7 +1,7 @@
 from application.db.model.database import Database
 
 
-class GenreRepository:
+class GenreRepository:      # todo realize genre repository
     base = 1
 
     def get_all_genres(self):
