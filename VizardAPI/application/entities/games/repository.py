@@ -1,5 +1,5 @@
 from .model import Game
-from .schema import GamesSchema
+from .schema import GameSchema
 from application.app import base
 
 
@@ -17,7 +17,7 @@ class GamesRepository:
 
     @staticmethod
     def post_game(json_data: dict):
-        game = GamesSchema(many=False).load(json_data)
+        game = GameSchema(many=False).load(json_data)
         if type(game) is not Game:
             return "Invalid data"
         base.games.append(game)
@@ -28,7 +28,7 @@ class GamesRepository:
     def put_game(game_id: int, json_data: dict):
         for i in range(len(base.games)):
             if base.games[i].game_id == game_id:
-                game = GamesSchema(many=False).load(json_data)
+                game = GameSchema(many=False).load(json_data)
                 if type(game) is Game:
                     return "Invalid data"
                 base.games[i] = game

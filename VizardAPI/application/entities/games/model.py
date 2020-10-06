@@ -5,8 +5,8 @@ from application.db.model.orm.base import Base
 class Game(Base):
     __tablename__ = "Games"
 
-    def __init__(self, name, avatar, trailer, description, platform, steam, torrent, rate,
-                 price, studio_id, genre_id, system_requirements, game_id=None):
+    def __init__(self, name=None, avatar=None, trailer=None, description=None, platform=None, rate=None,
+                 price=None, studio_id=None, genre_id=None, steam=None, torrent=None, system_requirements=None, game_id=None):
         self.game_id = game_id
         self.name = name
         self.avatar = avatar

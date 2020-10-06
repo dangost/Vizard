@@ -5,7 +5,7 @@ from application.db.model.orm.base import Base
 class Studio(Base):
     __tablename__ = "Studios"
 
-    def __init__(self, name, avatar, description, studio_id=None):
+    def __init__(self, name=None, avatar=None, description=None, studio_id=None):
         self.studio_id = studio_id
         self.name = name
         self.avatar = avatar

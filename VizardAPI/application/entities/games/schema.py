@@ -2,30 +2,30 @@ from marshmallow import fields, Schema, post_load, post_dump
 from application.entities.games.model import Game
 
 
-class GamesSchema(Schema):
+class GameSchema(Schema):
     game_id = fields.Integer(data_key="id", required=False)
 
-    name = fields.String(data_key="name")
+    name = fields.String(data_key="name", required=True)
 
-    avatar = fields.String(data_key="avt")  # picture link
+    avatar = fields.String(data_key="avt", required=True)  # picture link
 
-    trailer = fields.String(data_key="tr")  # yt link
+    trailer = fields.String(data_key="tr", required=True)  # yt link
 
-    description = fields.String(data_key="desc")
+    description = fields.String(data_key="desc", required=True)
 
-    platform = fields.String(data_key="os")
+    platform = fields.String(data_key="os", required=True)
 
     steam = fields.String(data_key="stm", required=False)  # steam link
 
     torrent = fields.String(data_key="trr", required=False)  # torrent link
 
-    rate = fields.Float(data_key="rt")
+    rate = fields.Float(data_key="rt", required=False)
 
     price = fields.Float(data_key="prc")
 
-    studio_id = fields.Integer(data_key="stdId")
+    studio_id = fields.Integer(data_key="stdId", required=True)
 
-    genre_id = fields.Integer(data_key="gnrId")
+    genre_id = fields.Integer(data_key="gnrId", required=True)
 
     system_requirements = fields.String(data_key="sys", required=False)
 

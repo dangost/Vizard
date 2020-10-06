@@ -1,17 +1,46 @@
-from application.db.model.database import Database
+from .model import Genre
+from .schema import GenresSchema
+from application.app import base
 
 
-class GenreRepository:      # todo realize genre repository
-    base = 1
+class GenresRepository:
+    @staticmethod
+    def get_all_genres():
+        return base.genres
 
-    def get_all_genres(self):
-        pass
+    @staticmethod
+    def get_id_genre(item_id) -> Genre or str:
+        for each in base.genres:
+            if each.genre_id == item_id:
+                return each
+        return "No such Id"
 
-    def get_id_genre(self):
-        pass
+    @staticmethod
+    def post_genre(json_data: dict):
+        genre = GenresSchema(many=False).load(json_data)
+        if type(genre) is not Genre:
+            return "Invalid data"
+        base.genres.append(genre)
+        base.save()
+        return "OK"
 
-    def post_genre(self):
-        pass
+    @staticmethod
+    def put_genre(genre_id: int, json_data: dict):
+        for i in range(len(base.genres)):
+            if base.genres[i].genre_id == genre_id:
+                genre = GenresSchema(many=False).load(json_data)
+                if type(genre) is Genre:
+                    return "Invalid data"
+                base.genres[i] = genre
+                base.save()
+                return "OK"
+        return "No such Id"
 
-    def delete_genre(self, genre_id: int):
-        pass
+    @staticmethod
+    def delete_genre(item_id: int):
+        for each in base.genres:
+            if each.genre_id == item_id:
+                base.genres.remove(each)
+                base.save()
+                return "OK"
+        return "No such Id"
