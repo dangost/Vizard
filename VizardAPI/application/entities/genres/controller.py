@@ -4,7 +4,7 @@ from.schema import GenresSchema
 
 genres_controller_api = Blueprint('genres_controller_api', __name__)
 
-rep = GenreRepository()
+rep = GenresRepository()
 
 
 @genres_controller_api.route("/api/Genres/" or "/api/Genres", methods=['GET'])
@@ -24,7 +24,7 @@ def get_genre_id(game_id):
 @genres_controller_api.route("/api/Genres/" or "/api/Genres", methods=['POST'])
 def post_genre():
     json_data = request.get_json()
-    result = rep.post_genres(json_data)
+    result = rep.post_genre(json_data)
     return result
 
 
