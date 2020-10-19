@@ -1,46 +1,43 @@
 from .model import Genre
 from .schema import GenresSchema
-from application.app import base
 
 
 class GenresRepository:
-    @staticmethod
-    def get_all_genres():
-        return base.genres
+    def __init__(self, base):
+        self.db = base
 
-    @staticmethod
-    def get_id_genre(item_id) -> Genre or str:
-        for each in base.genres:
+    def get_all_genres(self):
+        return self.db.genres
+
+    def get_id_genre(self, item_id) -> Genre or str:
+        for each in self.db.genres:
             if each.genre_id == item_id:
                 return each
         return "No such Id"
 
-    @staticmethod
-    def post_genre(json_data: dict):
+    def post_genre(self, json_data: dict):
         genre = GenresSchema(many=False).load(json_data)
         if type(genre) is not Genre:
             return "Invalid data"
-        base.genres.append(genre)
-        base.save()
+        self.db.genres.append(genre)
+        self.db.save()
         return "OK"
 
-    @staticmethod
-    def put_genre(genre_id: int, json_data: dict):
-        for i in range(len(base.genres)):
-            if base.genres[i].genre_id == genre_id:
+    def put_genre(self, genre_id: int, json_data: dict):
+        for i in range(len(self.db.genres)):
+            if self.db.genres[i].genre_id == genre_id:
                 genre = GenresSchema(many=False).load(json_data)
                 if type(genre) is Genre:
                     return "Invalid data"
-                base.genres[i] = genre
-                base.save()
+                self.db.genres[i] = genre
+                self.db.save()
                 return "OK"
         return "No such Id"
 
-    @staticmethod
-    def delete_genre(item_id: int):
-        for each in base.genres:
+    def delete_genre(self, item_id: int):
+        for each in self.db.genres:
             if each.genre_id == item_id:
-                base.genres.remove(each)
-                base.save()
+                self.db.genres.remove(each)
+                self.db.save()
                 return "OK"
         return "No such Id"

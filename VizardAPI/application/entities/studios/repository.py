@@ -1,46 +1,43 @@
 from .model import Studio
 from .schema import StudioSchema
-from application.app import base
 
 
 class StudiosRepository:
-    @staticmethod
-    def get_all_studios():
-        return base.studios
+    def __init__(self, base):
+        self.db = base
 
-    @staticmethod
-    def get_id_studio(item_id) -> Studio or str:
-        for each in base.studios:
+    def get_all_studios(self):
+        return self.db.studios
+
+    def get_id_studio(self, item_id) -> Studio or str:
+        for each in self.db.studios:
             if each.studio_id == item_id:
                 return each
         return "No such Id"
 
-    @staticmethod
-    def post_studio(json_data: dict):
+    def post_studio(self, json_data: dict):
         studio = StudioSchema(many=False).load(json_data)
         if type(studio) is not studio:
             return "Invalid data"
-        base.studios.append(studio)
-        base.save()
+        self.db.studios.append(studio)
+        self.db.save()
         return "OK"
 
-    @staticmethod
-    def put_studio(studio_id: int, json_data: dict):
-        for i in range(len(base.studios)):
-            if base.studios[i].studio_id == studio_id:
+    def put_studio(self, studio_id: int, json_data: dict):
+        for i in range(len(self.db.studios)):
+            if self.db.studios[i].studio_id == studio_id:
                 studio = StudioSchema(many=False).load(json_data)
                 if type(studio) is Studio:
                     return "Invalid data"
-                base.studios[i] = studio
-                base.save()
+                self.db.studios[i] = studio
+                self.db.save()
                 return "OK"
         return "No such Id"
 
-    @staticmethod
-    def delete_studio(item_id: int):
-        for each in base.studios:
+    def delete_studio(self, item_id: int):
+        for each in self.db.studios:
             if each.studio_id == item_id:
-                base.studios.remove(each)
-                base.save()
+                self.db.studios.remove(each)
+                self.db.save()
                 return "OK"
         return "No such Id"

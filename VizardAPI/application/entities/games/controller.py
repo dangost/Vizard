@@ -1,9 +1,10 @@
 from flask import Blueprint, request, jsonify
 from .schema import GameSchema
 from .repository import GamesRepository
+from application.app import base
 
 
-rep: GamesRepository = GamesRepository()
+rep: GamesRepository = GamesRepository(base)
 
 games_controller_api = Blueprint('games_controller_api', __name__)
 

@@ -1,11 +1,12 @@
 from flask import Blueprint, jsonify, request
 from .repository import StudiosRepository
 from .schema import StudioSchema
+from application.app import base
 
 
 studios_controller_api = Blueprint('studios_controller_api', __name__)
 
-rep = StudiosRepository()
+rep = StudiosRepository(base)
 
 
 @studios_controller_api.route("/api/Studios/" or "/api/Studios", methods=['GET'])

@@ -1,10 +1,11 @@
 from flask import Blueprint, jsonify, request
 from .repository import GenresRepository
-from.schema import GenresSchema
+from .schema import GenresSchema
+from application.app import base
 
 genres_controller_api = Blueprint('genres_controller_api', __name__)
 
-rep = GenresRepository()
+rep = GenresRepository(base)
 
 
 @genres_controller_api.route("/api/Genres/" or "/api/Genres", methods=['GET'])

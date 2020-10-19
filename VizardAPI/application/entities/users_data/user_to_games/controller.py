@@ -1,43 +1,44 @@
 from flask import Blueprint, jsonify, request
 from .repository import UserToGamesRepository
 from .schema import UserToGamesSchema
+from application.app import base
 
-studios_controller_api = Blueprint('studios_controller_api', __name__)
+users_to_games_controller_api = Blueprint('studios_controller_api', __name__)
 
-rep = UserToGamesRepository()
+rep = UserToGamesRepository(base)
 
 
-@studios_controller_api.route("/api/Studios/" or "/api/Studios", methods=['GET'])
+@users_to_games_controller_api.route("/api/UsersToGames/" or "/api/UsersToGames", methods=['GET'])
 def get_all():
     data = rep.get_all_utd()
-    return jsonify(UserToGamesRepository(many=True).dump(data))
+    return jsonify(UserToGamesSchema(many=True).dump(data))
 
 
-@studios_controller_api.route("/api/Studios/<int:studio_id>/" or "/api/Studios/<int:studio_id>", methods=['GET'])
+@users_to_games_controller_api.route("/api/UsersToGames/<int:utd_id>/" or "/api/UsersToGames/<int:utd_id>", methods=['GET'])
 def get_id(studio_id):
     obj = rep.get_id_utd(studio_id)
     if type(obj) is str:
         return obj
-    return jsonify(UserToGamesRepository(many=False).dump(obj))
+    return jsonify(UserToGamesSchema(many=False).dump(obj))
 
 
-@studios_controller_api.route("/api/Studios/" or "/api/Studios", methods=['POST'])
+@users_to_games_controller_api.route("/api/UsersToGames/" or "/api/UsersToGames", methods=['POST'])
 def post():
     json_data = request.get_json()
     result = rep.post_utd(json_data)
     return result
 
 
-@studios_controller_api.route("/api/Studios/<int:studio_id>/" or "/api/Studios/<int:studio_id>", methods=['PUT'])
-def put(studio_id):
+@users_to_games_controller_api.route("/api/UsersToGames/<int:utd_id>/" or "/api/UsersToGames/<int:utd_id>",
+                                     methods=['PUT'])
+def put(utd_id):
     json_data = request.get_json()
-    result = rep.put_utd(studio_id, json_data)
+    result = rep.put_utd(utd_id, json_data)
     return result
 
 
-@studios_controller_api.route("/api/Studios/<int:studio_id>/" or "/api/Studios/<int:studio_id>", methods=['DELETE'])
-def delete(studio_id):
-    result = rep.delete_utd(studio_id)
+@users_to_games_controller_api.route("/api/UsersToGames/<int:utd_id>/" or "/api/UsersToGames/<int:utd_id>",
+                                     methods=['DELETE'])
+def delete(utd_id):
+    result = rep.delete_utd(utd_id)
     return result
-
-

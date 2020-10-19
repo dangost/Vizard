@@ -1,46 +1,43 @@
 from .model import Game
 from .schema import GameSchema
-from application.app import base
 
 
 class GamesRepository:
-    @staticmethod
-    def get_all_games():
-        return base.games
+    def __init__(self, base):
+        self.db = base
 
-    @staticmethod
-    def get_id_game(item_id) -> Game or str:
-        for each in base.games:
+    def get_all_games(self):
+        return self.db.games
+
+    def get_id_game(self, item_id) -> Game or str:
+        for each in self.db.games:
             if each.game_id == item_id:
                 return each
         return "No such Id"
 
-    @staticmethod
-    def post_game(json_data: dict):
+    def post_game(self, json_data: dict):
         game = GameSchema(many=False).load(json_data)
         if type(game) is not Game:
             return "Invalid data"
-        base.games.append(game)
-        base.save()
+        self.db.games.append(game)
+        self.db.save()
         return "OK"
 
-    @staticmethod
-    def put_game(game_id: int, json_data: dict):
-        for i in range(len(base.games)):
-            if base.games[i].game_id == game_id:
+    def put_game(self, game_id: int, json_data: dict):
+        for i in range(len(self.db.games)):
+            if self.db.games[i].game_id == game_id:
                 game = GameSchema(many=False).load(json_data)
                 if type(game) is Game:
                     return "Invalid data"
-                base.games[i] = game
-                base.save()
+                self.db.games[i] = game
+                self.db.save()
                 return "OK"
         return "No such Id"
 
-    @staticmethod
-    def delete_game(game_id: int):
-        for each in base.games:
+    def delete_game(self, game_id: int):
+        for each in self.db.games:
             if each.game_id == game_id:
-                base.games.remove(each)
-                base.save()
+                self.db.games.remove(each)
+                self.db.save()
                 return "OK"
         return "No such Id"

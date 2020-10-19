@@ -2,7 +2,7 @@ from sqlalchemy import Column, String, Integer, Boolean, ForeignKey
 from application.db.model.orm.base import Base
 
 
-class UserToRate(Base):
+class UserToRates(Base):
     __tablename__ = "UserToRate"
 
     def __init__(self, key=None, user_id=None, game_id=None, rate=None):
