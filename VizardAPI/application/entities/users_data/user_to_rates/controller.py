@@ -23,15 +23,6 @@ def get_id(utr_id):
     return jsonify(UserToRatesSchema(many=False).dump(obj))
 
 
-@users_to_games_controller_api.route("/api/UserToRates/UserGames/<int:user_id>/" or
-                                     "/api/UserToRates/UserGames/<int:user_id>", methods=['GET'])
-def get_user_id(user_id):
-    collection: list = rep.get_user_games(user_id)
-    if len(collection) == 0:
-        return []
-    return jsonify(GameSchema(many=True).dump(collection))
-
-
 @users_to_games_controller_api.route("/api/UserToRates/" or "/api/UserToRates", methods=['POST'])
 def post():
     json_data = request.get_json()

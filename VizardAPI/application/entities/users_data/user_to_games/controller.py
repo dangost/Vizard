@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from .repository import UserToGamesRepository
 from .schema import UserToGamesSchema
 from application.app import base
+from application.entities.games.schema import GameSchema
 
 users_to_games_controller_api = Blueprint('studios_controller_api', __name__)
 
@@ -20,6 +21,15 @@ def get_id(studio_id):
     if type(obj) is str:
         return obj
     return jsonify(UserToGamesSchema(many=False).dump(obj))
+
+
+@users_to_games_controller_api.route("/api/UsersToGames/UserGames/<int:user_id>/" or
+                                     "/api/UsersToGames/UserGames/<int:user_id>", methods=['GET'])
+def get_user_id(user_id):
+    collection: list = rep.get_user_games(user_id)
+    if len(collection) == 0:
+        return []
+    return jsonify(GameSchema(many=True).dump(collection))
 
 
 @users_to_games_controller_api.route("/api/UsersToGames/" or "/api/UsersToGames", methods=['POST'])

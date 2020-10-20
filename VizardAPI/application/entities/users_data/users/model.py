@@ -5,12 +5,12 @@ from application.db.model.orm.base import Base
 class User(Base):
     __tablename__ = "Users"
 
-    def __init__(self, user_id=None, name=None, email=None, pass_hash=None, is_admin=None, avatar=None):
+    def __init__(self, user_id=None, name=None, email=None, pass_hash=None, admin_level=None, avatar=None):
         self.user_id = user_id
         self.name = name
         self.email = email
         self.pass_hash = pass_hash
-        self.is_admin = is_admin
+        self.admin_level = admin_level
         self.avatar = avatar
 
     user_id = Column("id", Integer, primary_key=True, unique=True)
@@ -21,6 +21,6 @@ class User(Base):
 
     pass_hash = Column("passHash", String)
 
-    is_admin = Column("admin", Boolean)
+    admin_level = Column("admin", Integer)
 
     avatar = Column("avatar", String)

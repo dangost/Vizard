@@ -17,16 +17,6 @@ class UserToRatesRepository:
                 return each
         return "No such Id"
 
-    def get_user_games(self, user_id) -> List[Game]:
-        games = []
-
-        for each in self.db.users_to_rates:
-            if each.user_id == user_id:
-                for such in self.db.games:
-                    if such.game_id == each.game_id:
-                        games.append(such)
-        return games
-
     def post_utr(self, json_data: dict):
         utr = UserToRatesSchema(many=False).load(json_data)
         if type(utr) is not UserToRates:

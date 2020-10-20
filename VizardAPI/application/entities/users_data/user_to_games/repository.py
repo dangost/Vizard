@@ -1,5 +1,7 @@
 from .model import UserToGames
 from .schema import UserToGamesSchema
+from typing import List
+from application.entities.games.model import Game
 
 
 class UserToGamesRepository:
@@ -14,6 +16,16 @@ class UserToGamesRepository:
             if each.id == item_id:
                 return each
         return "No such Id"
+
+    def get_user_games(self, user_id) -> List[Game]:
+        games = []
+
+        for each in self.db.users_to_rates:
+            if each.user_id == user_id:
+                for such in self.db.games:
+                    if such.game_id == each.game_id:
+                        games.append(such)
+        return games
 
     def post_utd(self, json_data: dict):
         utd = UserToGamesSchema(many=False).load(json_data)

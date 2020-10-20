@@ -11,7 +11,7 @@ class UserSchema(Schema):
 
     pass_hash = fields.String(data_key="hash")
 
-    is_admin = fields.Boolean(data_key="adm")       # todo create adm lvl
+    admin_level = fields.Integer(data_key="adm")     # todo create adm lvl
 
     avatar = fields.String(data_key="avt")
 
