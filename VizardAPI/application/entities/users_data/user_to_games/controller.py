@@ -4,6 +4,7 @@ from .schema import UserToGamesSchema
 from application.app import base
 from application.entities.games.schema import GameSchema
 
+
 users_to_games_controller_api = Blueprint('studios_controller_api', __name__)
 
 rep = UserToGamesRepository(base)
@@ -11,13 +12,13 @@ rep = UserToGamesRepository(base)
 
 @users_to_games_controller_api.route("/api/UsersToGames/" or "/api/UsersToGames", methods=['GET'])
 def get_all():
-    data = rep.get_all_utd()
+    data = rep.get_all()
     return jsonify(UserToGamesSchema(many=True).dump(data))
 
 
-@users_to_games_controller_api.route("/api/UsersToGames/<int:utd_id>/" or "/api/UsersToGames/<int:utd_id>", methods=['GET'])
-def get_id(studio_id):
-    obj = rep.get_id_utd(studio_id)
+@users_to_games_controller_api.route("/api/UsersToGames/<int:item_id>/" or "/api/UsersToGames/<int:item_id>", methods=['GET'])
+def get_id(item_id):
+    obj = rep.get_id(item_id)
     if type(obj) is str:
         return obj
     return jsonify(UserToGamesSchema(many=False).dump(obj))
@@ -25,7 +26,7 @@ def get_id(studio_id):
 
 @users_to_games_controller_api.route("/api/UsersToGames/UserGames/<int:user_id>/" or
                                      "/api/UsersToGames/UserGames/<int:user_id>", methods=['GET'])
-def get_user_id(user_id):
+def get_user_games(user_id):
     collection: list = rep.get_user_games(user_id)
     if len(collection) == 0:
         return []
@@ -35,20 +36,22 @@ def get_user_id(user_id):
 @users_to_games_controller_api.route("/api/UsersToGames/" or "/api/UsersToGames", methods=['POST'])
 def post():
     json_data = request.get_json()
-    result = rep.post_utd(json_data)
+    obj = UserToGamesSchema(many=False).load(json_data)
+    result = rep.add(obj)
     return result
 
 
-@users_to_games_controller_api.route("/api/UsersToGames/<int:utd_id>/" or "/api/UsersToGames/<int:utd_id>",
+@users_to_games_controller_api.route("/api/UsersToGames/<int:item_id>/" or "/api/UsersToGames/<int:item_id>",
                                      methods=['PUT'])
-def put(utd_id):
+def put(item_id):
     json_data = request.get_json()
-    result = rep.put_utd(utd_id, json_data)
+    obj = UserToGamesSchema(many=True).load(json_data)
+    result = rep.replace(obj, item_id)
     return result
 
 
-@users_to_games_controller_api.route("/api/UsersToGames/<int:utd_id>/" or "/api/UsersToGames/<int:utd_id>",
+@users_to_games_controller_api.route("/api/UsersToGames/<int:item_id>/" or "/api/UsersToGames/<int:item_id>",
                                      methods=['DELETE'])
-def delete(utd_id):
-    result = rep.delete_utd(utd_id)
+def delete(item_id):
+    result = rep.remove(item_id)
     return result

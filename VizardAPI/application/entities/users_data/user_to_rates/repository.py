@@ -2,6 +2,7 @@ from .model import UserToRates
 from .schema import UserToRatesSchema
 from typing import List
 from application.entities.games.model import Game
+from application.entities.abstract.base_repository import BaseRepository
 
 
 class UserToRatesRepository:

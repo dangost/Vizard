@@ -2,7 +2,6 @@ from abc import abstractmethod
 
 
 class BaseDatabase:
-
     games: list
     studios: list
     genres: list

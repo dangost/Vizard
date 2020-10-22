@@ -6,7 +6,7 @@ from application.app import base
 
 import time
 
-app = Flask(__name__)
+app = Flask("Vizard API")
 
 app.register_blueprint(games_controller_api)
 app.register_blueprint(genres_controller_api)

@@ -1,42 +1,40 @@
 from .model import Studio
-from .schema import StudioSchema
+from application.entities.abstract.base_repository import BaseRepository
 
 
-class StudiosRepository:
-    def __init__(self, base):
-        self.db = base
-
-    def get_all_studios(self):
+class StudiosRepository(BaseRepository):
+    def get_all(self):
         return self.db.studios
 
-    def get_id_studio(self, item_id) -> Studio or str:
+    def get_id(self, item_id):
         for each in self.db.studios:
             if each.studio_id == item_id:
                 return each
         return "No such Id"
 
-    def post_studio(self, json_data: dict):
-        studio = StudioSchema(many=False).load(json_data)
-        if type(studio) is not studio:
-            return "Invalid data"
+    def find(self, condition):
+        res = []
+        for each in self.db.studios:
+            if condition(each):
+                res.append(each)
+        return res
+
+    def add(self, studio: Studio):
         self.db.studios.append(studio)
         self.db.save()
         return "OK"
 
-    def put_studio(self, studio_id: int, json_data: dict):
+    def replace(self, studio, studio_id):
         for i in range(len(self.db.studios)):
             if self.db.studios[i].studio_id == studio_id:
-                studio = StudioSchema(many=False).load(json_data)
-                if type(studio) is Studio:
-                    return "Invalid data"
                 self.db.studios[i] = studio
                 self.db.save()
                 return "OK"
         return "No such Id"
 
-    def delete_studio(self, item_id: int):
+    def remove(self, studio_id: int):
         for each in self.db.studios:
-            if each.studio_id == item_id:
+            if each.studio_id == studio_id:
                 self.db.studios.remove(each)
                 self.db.save()
                 return "OK"
