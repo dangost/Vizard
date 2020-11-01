@@ -12,6 +12,6 @@ class UserToGames(Base):
 
     key = Column("id", Integer, primary_key=True, unique=True)
 
-    user_id = Column("userId", Integer, ForeignKey("User.id"))
+    user_id = Column("userId", Integer, ForeignKey("Users.id"))
 
     game_id = Column("gameId", Integer, ForeignKey("Games.id"))

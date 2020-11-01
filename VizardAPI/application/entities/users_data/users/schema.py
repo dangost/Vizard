@@ -18,3 +18,9 @@ class UserSchema(Schema):
     @post_load
     def load(self, data, **kwargs):
         return User(**data)
+
+
+class UserAuntSchema(Schema):
+    email = fields.String(data_key="email")
+
+    pass_hash = fields.String(data_key="hash")

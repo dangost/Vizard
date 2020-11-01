@@ -1,45 +1,40 @@
 from .model import UserToRates
-from .schema import UserToRatesSchema
-from typing import List
-from application.entities.games.model import Game
 from application.entities.abstract.base_repository import BaseRepository
 
 
-class UserToRatesRepository:
-    def __init__(self, base):
-        self.db = base
-
-    def get_all_utr(self):
+class UserToRatesRepository(BaseRepository):
+    def get_all(self):
         return self.db.users_to_rates
 
-    def get_id_utr(self, item_id) -> UserToRates or str:
+    def get_id(self, item_id):
         for each in self.db.users_to_rates:
             if each.id == item_id:
                 return each
         return "No such Id"
 
-    def post_utr(self, json_data: dict):
-        utr = UserToRatesSchema(many=False).load(json_data)
-        if type(utr) is not UserToRates:
-            return "Invalid data"
-        self.db.users_to_rates.append(utr)
+    def find(self, condition):
+        res = []
+        for each in self.db.users_to_rates:
+            if condition(each):
+                res.append(each)
+        return res
+
+    def add(self, obj: UserToRates):
+        self.db.users_to_rates.append(obj)
         self.db.save()
         return "OK"
 
-    def put_utr(self, utr_id: int, json_data: dict):
-        for i in range(len(self.db.users_to_rates)):
-            if self.db.users_to_rates[i].id == utr_id:
-                utr = UserToRatesSchema(many=False).load(json_data)
-                if type(utr) is UserToRates:
-                    return "Invalid data"
-                self.db.users_to_rates[i] = utr
+    def replace(self, item, item_id):
+        for i in range(len(self.db.games)):
+            if self.db.users_to_rates[i].id == item_id:
+                self.db.users_to_rates[i] = item
                 self.db.save()
                 return "OK"
         return "No such Id"
 
-    def delete_utr(self, utr_id: int):
+    def remove(self, item_id: int):
         for each in self.db.users_to_rates:
-            if each.id == utr_id:
+            if each.id == item_id:
                 self.db.users_to_rates.remove(each)
                 self.db.save()
                 return "OK"
