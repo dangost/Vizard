@@ -27,7 +27,7 @@ def get_studio_id(studio_id):
 @studios_controller_api.route("/api/Studios/" or "/api/Studios", methods=['POST'])
 def post_studio():
     json_data = request.get_json()
-    studio = StudioSchema(many=True).load(json_data)
+    studio = StudioSchema(many=False).load(json_data)
     result = rep.add(studio)
     return result
 

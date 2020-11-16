@@ -1,5 +1,6 @@
 from .model import Studio
 from application.entities.abstract.base_repository import BaseRepository
+from application.db.model.database import Database
 
 
 class StudiosRepository(BaseRepository):
@@ -20,8 +21,8 @@ class StudiosRepository(BaseRepository):
         return res
 
     def add(self, studio: Studio):
+        self.db.add(studio)
         self.db.studios.append(studio)
-        self.db.save()
         return "OK"
 
     def replace(self, studio, studio_id):
@@ -33,9 +34,13 @@ class StudiosRepository(BaseRepository):
         return "No such Id"
 
     def remove(self, studio_id: int):
-        for each in self.db.studios:
-            if each.studio_id == studio_id:
-                self.db.studios.remove(each)
-                self.db.save()
-                return "OK"
+        try:
+            for i in self.db.studios:
+                if i.studio_id == studio_id:
+                    print("found")
+                    self.db.delete(i)
+                    self.db.studios.remove(i)
+                    return "OK"
+        except Exception:
+            return "Exception"
         return "No such Id"

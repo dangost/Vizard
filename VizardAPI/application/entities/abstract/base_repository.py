@@ -5,6 +5,8 @@ class BaseRepository(ABC):
     def __init__(self, db):
         self.db = db
 
+    db = 1
+
     @abstractmethod
     def get_all(self):
         pass

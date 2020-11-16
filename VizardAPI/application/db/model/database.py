@@ -11,11 +11,11 @@ from application.db.model.orm.base import Base
 
 
 class Database(BaseDatabase):
-    session: sessionmaker()
+    session: sessionmaker() = 1
     engine = 1
 
     def __init__(self, base_path: str):
-        self.engine = create_engine('sqlite:///' + base_path, echo=True)
+        self.engine = create_engine('sqlite:///' + base_path+'?check_same_thread=False', echo=True)
 
     def load(self):
         Base.metadata.create_all(self.engine)
@@ -26,21 +26,19 @@ class Database(BaseDatabase):
         self.games = self.session.query(Game).all()
         self.studios = self.session.query(Studio).all()
         self.genres = self.session.query(Genre).all()
+
         self.users = self.session.query(User).all()
         self.users_to_games = self.session.query(UserToGames).all()
         self.users_to_rates = self.session.query(UserToRates).all()
 
+    def add(self, instance):
+        self.session.add(instance)
+        self.save()
+
+    def delete(self, instance):
+        self.session.delete(instance)
+        self.save()
+
     def save(self):     # TODO realise the save() function
-        for each in self.games:
-            self.session.delete(each)
-
-        for each in self.games:
-            self.session.delete(each)
-
-        for each in self.games:
-            self.session.delete(each)
-
-        self.session.add_all(self.genres)
-        self.session.add_all(self.studios)
-        self.session.add_all(self.games)
         self.session.commit()
+        pass

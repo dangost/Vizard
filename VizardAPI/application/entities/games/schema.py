@@ -21,7 +21,7 @@ class GameSchema(Schema):
 
     rate = fields.Float(data_key="rt", required=False)
 
-    price = fields.Float(data_key="prc")
+    price = fields.Float(data_key="prc", required=False)
 
     studio_id = fields.Integer(data_key="stdId", required=True)
 

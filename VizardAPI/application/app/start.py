@@ -6,7 +6,7 @@ from application.entities.studios.controller import studios_controller_api
 from application.entities.users_data.users.controller import users_api
 from application.entities.users_data.user_to_games.controller import users_to_games_api
 from application.entities.users_data.user_to_rates.controller import users_to_rates_api
-from application.app import base
+from application.app import base, session
 
 import time
 
@@ -25,6 +25,7 @@ start = time.time()
 base.save()
 end = time.time()
 print(end-start)
+print(type(session))
 
 if __name__ == "__main__":
     app.run()
