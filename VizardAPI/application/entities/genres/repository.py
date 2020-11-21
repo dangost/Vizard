@@ -21,14 +21,15 @@ class GenresRepository(BaseRepository):
 
     def add(self, genre: Genre):
         self.db.genres.append(genre)
-        self.db.save()
+        self.db.add(genre)
         return "OK"
 
     def replace(self, genre: Genre, genre_id):
         for i in range(len(self.db.genres)):
             if self.db.genres[i].genre_id == genre_id:
+                late = self.db.genres[i]
                 self.db.genres[i] = genre
-                self.db.save()
+                self.db.update(genre, late)
                 return "OK"
         return "No such Id"
 
@@ -36,6 +37,6 @@ class GenresRepository(BaseRepository):
         for each in self.db.genres:
             if each.genre_id == genre_id:
                 self.db.genres.remove(each)
-                self.db.save()
+                self.db.delete(each)
                 return "OK"
         return "No such Id"

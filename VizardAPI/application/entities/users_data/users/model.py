@@ -5,13 +5,15 @@ from application.db.model.orm.base import Base
 class User(Base):
     __tablename__ = "Users"
 
-    def __init__(self, user_id=None, name=None, email=None, pass_hash=None, admin_level=None, avatar=None):
-        self.user_id = user_id
+    def __init__(self, id=None, name=None, email=None, hash=None, adm=None, avt=None):
+        self.user_id = id
         self.name = name
         self.email = email
-        self.pass_hash = pass_hash
-        self.admin_level = admin_level
-        self.avatar = avatar
+        self.pass_hash = hash
+        self.admin_level = adm
+        if self.admin_level is None:
+            self.admin_level = 0
+        self.avatar = avt
 
     user_id = Column("id", Integer, primary_key=True, unique=True)
 
@@ -24,3 +26,9 @@ class User(Base):
     admin_level = Column("admin", Integer)
 
     avatar = Column("avatar", String)
+
+
+class UserAuth:
+    def __init__(self, email, pass_hash):
+        self.email = email
+        self.pass_hash = pass_hash

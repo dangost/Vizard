@@ -8,6 +8,7 @@ from application.entities.users_data.user_to_rates.schema import UserToRates
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 from application.db.model.orm.base import Base
+from sqlalchemy import inspect
 
 
 class Database(BaseDatabase):
@@ -39,6 +40,10 @@ class Database(BaseDatabase):
         self.session.delete(instance)
         self.save()
 
-    def save(self):     # TODO realise the save() function
+    def update(self, instance, late_instance):
+        self.delete(late_instance)
+        self.add(instance)
+
+    def save(self):
         self.session.commit()
         pass

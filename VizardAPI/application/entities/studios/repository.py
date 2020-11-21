@@ -1,6 +1,5 @@
 from .model import Studio
 from application.entities.abstract.base_repository import BaseRepository
-from application.db.model.database import Database
 
 
 class StudiosRepository(BaseRepository):
@@ -28,8 +27,9 @@ class StudiosRepository(BaseRepository):
     def replace(self, studio, studio_id):
         for i in range(len(self.db.studios)):
             if self.db.studios[i].studio_id == studio_id:
+                late = self.db.studios[i]
                 self.db.studios[i] = studio
-                self.db.save()
+                self.db.replace(studio, late)
                 return "OK"
         return "No such Id"
 
@@ -37,7 +37,6 @@ class StudiosRepository(BaseRepository):
         try:
             for i in self.db.studios:
                 if i.studio_id == studio_id:
-                    print("found")
                     self.db.delete(i)
                     self.db.studios.remove(i)
                     return "OK"

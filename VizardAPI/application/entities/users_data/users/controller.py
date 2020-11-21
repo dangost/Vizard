@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from .repository import UsersRepository
-from .schema import UserSchema
+from .schema import UserSchema, UserAuntSchema
 from application.app import base
 
 
@@ -48,6 +48,14 @@ def put(item_id):
 def delete(item_id):
     result = rep.remove(item_id)
     return result
+
+
+@users_api.route("/api/Users/Login/" or "/api/Users/Login", methods=['POST'])
+def user_login():
+    json_data = request.get_json()
+    obj = UserAuntSchema(many=False).load(json_data)
+    res = rep.login_check(obj)
+    return jsonify(res)
 
 
 

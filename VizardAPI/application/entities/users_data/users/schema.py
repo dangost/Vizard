@@ -1,15 +1,15 @@
 from marshmallow import Schema, fields, post_load
-from .model import User
+from .model import User, UserAuth
 
 
 class UserSchema(Schema):
     user_id = fields.Integer(data_key="id")
 
-    name = fields.String(data_key="name")
+    name = fields.String(data_key="name", required=True)
 
-    email = fields.String(data_key="email")
+    email = fields.String(data_key="email", required=True)
 
-    pass_hash = fields.String(data_key="hash")
+    pass_hash = fields.String(data_key="hash", required=True)
 
     admin_level = fields.Integer(data_key="adm")     # todo create adm lvl
 
@@ -24,3 +24,7 @@ class UserAuntSchema(Schema):
     email = fields.String(data_key="email")
 
     pass_hash = fields.String(data_key="hash")
+
+    @post_load
+    def load(self, data, **kwargs):
+        return UserAuth(**data)

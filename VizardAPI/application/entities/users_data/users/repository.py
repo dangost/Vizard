@@ -8,7 +8,7 @@ class UsersRepository(BaseRepository):
 
     def get_id(self, item_id):
         for each in self.db.users:
-            if each.id == item_id:
+            if each.user_id == item_id:
                 return each
         return "No such Id"
 
@@ -20,22 +20,29 @@ class UsersRepository(BaseRepository):
         return res
 
     def add(self, obj: User):
-        self.db.users_to_rates.append(obj)
-        self.db.save()
+        self.db.users.append(obj)
+        self.db.add(obj)
         return "OK"
 
     def replace(self, item, item_id):
         for i in range(len(self.db.users)):
-            if self.db.users[i].id == item_id:
+            if self.db.users[i].user_id == item_id:
+                late = self.db.users[i]
                 self.db.users[i] = item
-                self.db.save()
+                self.db.update(item, late)
                 return "OK"
         return "No such Id"
 
     def remove(self, item_id: int):
         for each in self.db.users:
-            if each.id == item_id:
+            if each.user_id == item_id:
                 self.db.users.remove(each)
-                self.db.save()
+                self.db.delete(each)
                 return "OK"
         return "No such Id"
+
+    def login_check(self, login):
+        for each in self.get_all():
+            if each.email == login.email and each.pass_hash == login.pass_hash:
+                return {"res": True}
+        return {"res": False}

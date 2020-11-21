@@ -5,11 +5,11 @@ from application.db.model.orm.base import Base
 class Studio(Base):
     __tablename__ = "Studios"
 
-    def __init__(self, name=None, avatar=None, description=None, studio_id=None):
-        self.studio_id = studio_id
+    def __init__(self, id=None, name=None, avt=None, desc=None):
+        self.studio_id = id
         self.name = name
-        self.avatar = avatar
-        self.description = description
+        self.avatar = avt
+        self.description = desc
 
     studio_id = Column("id", Integer, primary_key=True, unique=True)
 
@@ -18,3 +18,9 @@ class Studio(Base):
     avatar = Column("avatar", String)
 
     description = Column("description", String)
+
+    def to_dict(self):
+        data = {'id': self.studio_id,
+                'name': self.name,
+                'avatar': self.description}
+        return data

@@ -5,21 +5,21 @@ from application.db.model.orm.base import Base
 class Game(Base):
     __tablename__ = "Games"
 
-    def __init__(self, name=None, avatar=None, trailer=None, description=None, platform=None, rate=None,
-                 price=None, studio_id=None, genre_id=None, steam=None, torrent=None, system_requirements=None, game_id=None):
-        self.game_id = game_id
+    def __init__(self, id=None, name=None, avt=None, tr=None, desc=None, os=None, rt=None,
+                 prc=None, stdId=None, gnrId=None, stm=None, trr=None, sys=None):
+        self.game_id = id
         self.name = name
-        self.avatar = avatar
-        self.description = description
-        self.platform = platform
-        self.trailer = trailer
-        self.steam = steam
-        self.torrent = torrent
-        self.rate = rate
-        self.price = price
-        self.studio_id = studio_id
-        self.genre_id = genre_id
-        self.system_requirements = system_requirements
+        self.avatar = avt
+        self.description = desc
+        self.platform = os
+        self.trailer = tr
+        self.steam = stm
+        self.torrent = trr
+        self.rate = rt
+        self.price = prc
+        self.studio_id = stdId
+        self.genre_id = gnrId
+        self.system_requirements = sys
 
     game_id = Column("id", Integer, primary_key=True, unique=True)
 
@@ -46,3 +46,5 @@ class Game(Base):
     genre_id = Column("genreId", Integer, ForeignKey("Genres.id"))
 
     system_requirements = Column("systemReq", String)
+
+

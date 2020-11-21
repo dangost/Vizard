@@ -31,21 +31,22 @@ class UserToGamesRepository(BaseRepository):
 
     def add(self, obj: UserToGames):
         self.db.users_to_games.append(obj)
-        self.db.save()
+        self.db.add(obj)
         return "OK"
 
     def replace(self, item, item_id):
         for i in range(len(self.db.games)):
-            if self.db.users_to_games[i].id == item_id:
+            if self.db.users_to_games[i].key == item_id:
+                late = self.db.users_to_games[i]
                 self.db.users_to_games[i] = item
-                self.db.save()
+                self.db.update(item, late)
                 return "OK"
         return "No such Id"
 
     def remove(self, item_id: int):
         for each in self.db.users_to_games:
-            if each.id == item_id:
+            if each.key == item_id:
                 self.db.users_to_games.remove(each)
-                self.db.save()
+                self.db.delete(each)
                 return "OK"
         return "No such Id"

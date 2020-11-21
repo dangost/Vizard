@@ -21,14 +21,15 @@ class GamesRepository(BaseRepository):
 
     def add(self, game: Game):
         self.db.games.append(game)
-        self.db.save()
+        self.db.add(game)
         return "OK"
 
     def replace(self, game: Game, game_id: int):
         for i in range(len(self.db.games)):
             if self.db.games[i].game_id == game_id:
+                late = self.db.games[i]
                 self.db.games[i] = game
-                self.db.save()
+                self.db.replace(game, late)
                 return "OK"
         return "No such Id"
 
@@ -36,6 +37,6 @@ class GamesRepository(BaseRepository):
         for each in self.db.games:
             if each.game_id == game_id:
                 self.db.games.remove(each)
-                self.db.save()
+                self.db.delete(each)
                 return "OK"
         return "No such Id"
