@@ -5,10 +5,10 @@ from application.db.model.orm.base import Base
 class UserToRates(Base):
     __tablename__ = "UserToRate"
 
-    def __init__(self, id=None, uid=None, gid=None, rate=None):
+    def __init__(self, id=None, user_id=None, game_id=None, rate=None):
         self.key = id
-        self.user_id = uid
-        self.game_id = gid
+        self.user_id = user_id
+        self.game_id = game_id
         self.rate = rate
 
     key = Column("id", Integer, primary_key=True, unique=True)

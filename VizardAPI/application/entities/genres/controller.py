@@ -3,6 +3,7 @@ from .repository import GenresRepository
 from .schema import GenresSchema
 from application.app import base
 from application.entities.abstract.base_repository import BaseRepository
+from ..games.schema import GameSchema
 
 genres_controller_api = Blueprint('genres_controller_api', __name__)
 
@@ -21,6 +22,15 @@ def get_genre_id(game_id):
     if type(obj) is str:
         return obj
     return jsonify(GenresSchema(many=False).dump(obj))
+
+
+@genres_controller_api.route("/api/Genres/GenreGames/<int:genre_id>/")
+def get_genre_games(genre_id):
+    games = []
+    for game in base.games:
+        if game.genre_id == genre_id:
+            games.append(game)
+    return jsonify(GameSchema(many=True).dump(games))
 
 
 @genres_controller_api.route("/api/Genres/" or "/api/Genres", methods=['POST'])

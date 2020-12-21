@@ -5,10 +5,10 @@ from application.db.model.orm.base import Base
 class UserToGames(Base):
     __tablename__ = "UserToGames"
 
-    def __init__(self, key=None, uid=None, gid=None):
-        self.key = key
-        self.user_id = uid
-        self.game_id = gid
+    def __init__(self, id=None, user_id=None, game_id=None):
+        self.key = id
+        self.user_id = user_id
+        self.game_id = game_id
 
     key = Column("id", Integer, primary_key=True, unique=True)
 

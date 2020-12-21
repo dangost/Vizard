@@ -26,13 +26,12 @@ def get_id(item_id):
     return jsonify(UserToGamesSchema(many=False).dump(obj))
 
 
-@users_to_games_api.route("/api/UsersToGames/UserGames/<int:user_id>/" or
-                          "/api/UsersToGames/UserGames/<int:user_id>",
+@users_to_games_api.route("/api/UsersToGames/UserGames/<int:user_id>/",
                           methods=['GET'])
 def get_user_games(user_id):
     collection: list = rep.get_user_games(user_id)
     if len(collection) == 0:
-        return []
+        return jsonify([])
     return jsonify(GameSchema(many=True).dump(collection))
 
 

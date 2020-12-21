@@ -5,10 +5,10 @@ from application.db.model.orm.base import Base
 class Genre(Base):
     __tablename__ = "Genres"
 
-    def __init__(self, id=None, name=None, desc=None):
+    def __init__(self, id=None, name=None, description=None):
         self.genre_id = id
         self.name = name
-        self.description = desc
+        self.description = description
 
     genre_id = Column("id", Integer, primary_key=True, unique=True)
 

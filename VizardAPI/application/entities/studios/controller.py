@@ -3,7 +3,7 @@ from .repository import StudiosRepository
 from .schema import StudioSchema
 from application.app import base
 from application.entities.abstract.base_repository import BaseRepository
-
+from ..games.schema import GameSchema
 
 studios_controller_api = Blueprint('studios_controller_api', __name__)
 
@@ -22,6 +22,15 @@ def get_studio_id(studio_id):
     if type(obj) is str:
         return obj
     return jsonify(StudioSchema(many=False).dump(obj))
+
+
+@studios_controller_api.route("/api/Studios/StudioGames/<int:studio_id>/")
+def get_studio_games(studio_id):
+    games = []
+    for game in base.games:
+        if game.studio_id == studio_id:
+            games.append(game)
+    return jsonify(GameSchema(many=True).dump(games))
 
 
 @studios_controller_api.route("/api/Studios/" or "/api/Studios", methods=['POST'])

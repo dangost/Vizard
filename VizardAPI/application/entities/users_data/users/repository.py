@@ -20,6 +20,10 @@ class UsersRepository(BaseRepository):
         return res
 
     def add(self, obj: User):
+        for user in self.db.users:
+            if obj.email == user.email:
+                return "BAD"
+
         self.db.users.append(obj)
         self.db.add(obj)
         return "OK"
@@ -44,5 +48,5 @@ class UsersRepository(BaseRepository):
     def login_check(self, login):
         for each in self.get_all():
             if each.email == login.email and each.pass_hash == login.pass_hash:
-                return {"res": True}
-        return {"res": False}
+                return {"Id": each.user_id, "Result": "true"}
+        return {"Id": -1, "Result": "false"}

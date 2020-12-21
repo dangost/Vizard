@@ -8,7 +8,6 @@ from application.entities.users_data.user_to_rates.schema import UserToRates
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 from application.db.model.orm.base import Base
-from sqlalchemy import inspect
 
 
 class Database(BaseDatabase):
