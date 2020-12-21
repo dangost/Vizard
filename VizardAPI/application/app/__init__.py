@@ -1,8 +1,7 @@
-from application.db.abstract.base_database import BaseDatabase
-from application.db.model.database import Database
+from init_base import create_base
 
-base_path = r"C:\Users\danil\Desktop\base.db"
 
-base: BaseDatabase = Database(base_path)
-session = Database.session
+base, session = create_base()
 
+
+#
