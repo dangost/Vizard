@@ -4,12 +4,12 @@ from application.entities.abstract.base_repository import BaseRepository
 
 class UsersRepository(BaseRepository):
     def get_all(self):
-        return self.db.users
+        return self.db.get_all(User)
 
     def get_id(self, item_id):
-        for each in self.db.users:
-            if each.user_id == item_id:
-                return each
+        users = self.db.get_by_id(User, item_id)
+        if users is not None:
+            return users
         return "No such Id"
 
     def find(self, condition):
@@ -29,21 +29,18 @@ class UsersRepository(BaseRepository):
         return "OK"
 
     def replace(self, item, item_id):
-        for i in range(len(self.db.users)):
-            if self.db.users[i].user_id == item_id:
-                late = self.db.users[i]
-                self.db.users[i] = item
-                self.db.update(item, late)
-                return "OK"
-        return "No such Id"
+        temp = self.get_id(item_id)
+        if temp == "No such Id":
+            return temp
+        self.db.update(User, User.user_id, item_id, item)
+        return "OK"
 
     def remove(self, item_id: int):
-        for each in self.db.users:
-            if each.user_id == item_id:
-                self.db.users.remove(each)
-                self.db.delete(each)
-                return "OK"
-        return "No such Id"
+        temp = self.get_id(item_id)
+        if temp == "No such Id":
+            return temp
+        self.db.delete(temp)
+        return "OK"
 
     def login_check(self, login):
         for each in self.get_all():

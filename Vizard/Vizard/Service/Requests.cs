@@ -40,7 +40,7 @@ namespace Vizard.Service
         {
             using (var client = new HttpClient())
             {
-                var response = await client.GetAsync(url);
+                var response = await client.DeleteAsync(url);
                 return await response.Content.ReadAsStringAsync();
             }
         }

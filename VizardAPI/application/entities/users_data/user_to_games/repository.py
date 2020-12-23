@@ -4,12 +4,12 @@ from application.entities.abstract.base_repository import BaseRepository
 
 class UserToGamesRepository(BaseRepository):
     def get_all(self):
-        return self.db.users_to_games
+        return self.db.get_all(UserToGames)
 
     def get_id(self, item_id):
-        for each in self.db.users_to_games:
-            if each.id == item_id:
-                return each
+        user_to_games = self.db.get_by_id(UserToGames, item_id)
+        if user_to_games is not None:
+            return user_to_games
         return "No such Id"
 
     def find(self, condition):
@@ -35,18 +35,15 @@ class UserToGamesRepository(BaseRepository):
         return "OK"
 
     def replace(self, item, item_id):
-        for i in range(len(self.db.games)):
-            if self.db.users_to_games[i].key == item_id:
-                late = self.db.users_to_games[i]
-                self.db.users_to_games[i] = item
-                self.db.update(item, late)
-                return "OK"
-        return "No such Id"
+        temp = self.get_id(item_id)
+        if temp == "No such Id":
+            return temp
+        self.db.update(UserToGames, UserToGames.key, item_id, item)
+        return "OK"
 
     def remove(self, item_id: int):
-        for each in self.db.users_to_games:
-            if each.key == item_id:
-                self.db.users_to_games.remove(each)
-                self.db.delete(each)
-                return "OK"
-        return "No such Id"
+        temp = self.get_id(item_id)
+        if temp == "No such Id":
+            return temp
+        self.db.delete(temp)
+        return "OK"

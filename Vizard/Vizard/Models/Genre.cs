@@ -10,7 +10,6 @@ namespace Vizard.Models
     {
         public Genre(string name, string description)
         {
-            Id = null;
             Name = name;
             Description = description;
         }

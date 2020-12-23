@@ -9,9 +9,8 @@ namespace Vizard.Models
     class Game
     {
         public Game(string name, string avatar, string trailer, string description, 
-            string platform, string steam, string torrent, float rate, float price, int studioId, int genreId, string systemReq)
+            string platform, string steam, string torrent, float rate, float price, int? studioId, int? genreId, string systemReq)
         {
-            Id = null;
             Name = name;
             Avatar = avatar;
             Trailer = trailer;
@@ -46,9 +45,9 @@ namespace Vizard.Models
 
         public float Price { get; set; }
 
-        public int StudioId { get; set; }
+        public int? StudioId { get; set; }
 
-        public int GenreId { get; set; }
+        public int? GenreId { get; set; }
 
         public string SystemRequirements { get; set; }
     }

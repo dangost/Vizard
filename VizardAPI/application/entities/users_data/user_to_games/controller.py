@@ -3,6 +3,7 @@ from .repository import UserToGamesRepository
 from .schema import UserToGamesSchema
 from application.app import base
 from application.entities.games.schema import GameSchema
+import time
 
 
 users_to_games_api = Blueprint('users_to_games_controller_api', __name__)

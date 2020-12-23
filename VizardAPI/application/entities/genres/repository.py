@@ -4,12 +4,12 @@ from application.entities.abstract.base_repository import BaseRepository
 
 class GenresRepository(BaseRepository):
     def get_all(self):
-        return self.db.genres
+        return self.db.get_all(Genre)
 
     def get_id(self, item_id):
-        for each in self.db.genres:
-            if each.genre_id == item_id:
-                return each
+        genre = self.db.get_by_id(Genre, item_id)
+        if genre is not None:
+            return genre
         return "No such Id"
 
     def find(self, condition):
@@ -25,18 +25,15 @@ class GenresRepository(BaseRepository):
         return "OK"
 
     def replace(self, genre: Genre, genre_id):
-        for i in range(len(self.db.genres)):
-            if self.db.genres[i].genre_id == genre_id:
-                late = self.db.genres[i]
-                self.db.genres[i] = genre
-                self.db.update(genre, late)
-                return "OK"
-        return "No such Id"
+        temp = self.get_id(genre_id)
+        if temp == "No such Id":
+            return temp
+        self.db.update(Genre, Genre.genre_id, genre_id, genre)
+        return "OK"
 
     def remove(self, genre_id: int):
-        for each in self.db.genres:
-            if each.genre_id == genre_id:
-                self.db.genres.remove(each)
-                self.db.delete(each)
-                return "OK"
-        return "No such Id"
+        temp = self.get_id(genre_id)
+        if temp == "No such Id":
+            return temp
+        self.db.delete(temp)
+        return "OK"

@@ -4,17 +4,17 @@ from application.entities.abstract.base_repository import BaseRepository
 
 class UserToRatesRepository(BaseRepository):
     def get_all(self):
-        return self.db.users_to_rates
+        return self.db.get_all(UserToRates)
 
     def get_id(self, item_id):
-        for each in self.db.users_to_rates:
-            if each.id == item_id:
-                return each
+        user_to_rates = self.db.get_by_id(UserToRates, item_id)
+        if user_to_rates is not None:
+            return user_to_rates
         return "No such Id"
 
     def find(self, condition):
         res = []
-        for each in self.db.users_to_rates:
+        for each in self.get_all():
             if condition(each):
                 res.append(each)
         return res
@@ -25,7 +25,7 @@ class UserToRatesRepository(BaseRepository):
         return "OK"
 
     def replace(self, item, item_id):
-        for i in range(len(self.db.games)):
+        for i in range(len(self.get_all())):
             if self.db.users_to_rates[i].key == item_id:
                 late = self.db.users_to_rates[i]
                 self.db.users_to_rates[i] = item

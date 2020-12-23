@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from .repository import UsersRepository
 from .schema import UserSchema, UserAuntSchema
 from application.app import base
+import time
 
 
 users_api = Blueprint('users_controller_api', __name__)
@@ -38,7 +39,7 @@ def post():
                  methods=['PUT'])
 def put(item_id):
     json_data = request.get_json()
-    obj = UserSchema(many=True).load(json_data)
+    obj = UserSchema(many=False).load(json_data)
     result = rep.replace(obj, item_id)
     return result
 

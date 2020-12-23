@@ -67,6 +67,15 @@
     <Compile Include="EditUser.xaml.cs">
       <DependentUpon>EditUser.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GameEdit.xaml.cs">
+      <DependentUpon>GameEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GamePage.xaml.cs">
+      <DependentUpon>GamePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GenreEdit.xaml.cs">
+      <DependentUpon>GenreEdit.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Models\Game.cs" />
     <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\Studio.cs" />
@@ -76,11 +85,26 @@
     </Compile>
     <Compile Include="Service\DataHandler.cs" />
     <Compile Include="Service\Requests.cs" />
+    <Compile Include="StudioEdit.xaml.cs">
+      <DependentUpon>StudioEdit.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\GameView.cs" />
     <Compile Include="View\GenreView.cs" />
     <Compile Include="View\StudioView.cs" />
     <Compile Include="View\UserView.cs" />
     <Page Include="EditUser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GameEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GamePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GenreEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -105,6 +129,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Registration.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StudioEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

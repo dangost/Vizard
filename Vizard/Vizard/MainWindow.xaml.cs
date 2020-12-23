@@ -14,6 +14,7 @@ using Vizard.Service;
 using Vizard.Consts;
 using Vizard.Converters;
 using System.Windows.Media.Imaging;
+using System.Windows.Input;
 
 namespace Vizard
 {
@@ -22,8 +23,7 @@ namespace Vizard
     /// </summary>
     public partial class MainWindow : Window
     {
-        
-
+        const int Limit = 3;
         public MainWindow()
         {
             var loginWindow = new Login();
@@ -134,8 +134,6 @@ namespace Vizard
             var games = await getUserGamesAsync(user.Id);
 
             dataGridSelectedUserGames.ItemsSource = await EntityConverter.ToGamesView(games);
-
-
         }
 
         private async void dataGridUsers_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -173,11 +171,18 @@ namespace Vizard
 
         async void updateGenre(GenreView genreView)
         {
-            var genreJson = await Requests.Get(ConstantSettings.GetGenreId + $"{genreView.Id}/");
-            Genre genre = JsonConvert.DeserializeObject<Genre>(genreJson);
+            try 
+            {
+                var genreJson = await Requests.Get(ConstantSettings.GetGenreId + $"{genreView.Id}/");
+                Genre genre = JsonConvert.DeserializeObject<Genre>(genreJson);
 
-            labelGenreName.Content = genre.Name;
-            textBlockGenreDescription.Text = genre.Description;
+                labelGenreName.Content = genre.Name;
+                textBlockGenreDescription.Text = genre.Description;
+            } catch (Exception) 
+            {
+                return;
+            }
+
         }
 
         private void dataGridStudios_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -188,20 +193,173 @@ namespace Vizard
 
         async void updateStudio(StudioView studioView)
         {
-            var studioJson = await Requests.Get(ConstantSettings.GetStudioId + $"{studioView.Id}/");
-            Studio studio = JsonConvert.DeserializeObject<Studio>(studioJson);
+            try {
+                var studioJson = await Requests.Get(ConstantSettings.GetStudioId + $"{studioView.Id}/");
+                Studio studio = JsonConvert.DeserializeObject<Studio>(studioJson);
 
-            labelStudioName.Content = studio.Name;
-            textBlockStudioDescription.Text = studio.Description;
+                labelStudioName.Content = studio.Name;
+                textBlockStudioDescription.Text = studio.Description;
 
-            imageStudioAvatar.Source = DataHandler.GetPictureBitmap(studio.Avatar);
+                imageStudioAvatar.Source = DataHandler.GetPictureBitmap(studio.Avatar);
 
-            var gamesJson = await Requests.Get(ConstantSettings.GetStudioGames + $"{studioView.Id}/");
-            List<Game> games = JsonConvert.DeserializeObject<List<Game>>(gamesJson);
+                var gamesJson = await Requests.Get(ConstantSettings.GetStudioGames + $"{studioView.Id}/");
+                List<Game> games = JsonConvert.DeserializeObject<List<Game>>(gamesJson);
 
-            List<GameView> gamesView = await EntityConverter.ToGamesView(games);
+                List<GameView> gamesView = await EntityConverter.ToGamesView(games);
 
-            dataGridStudioGames.ItemsSource = gamesView;
+                dataGridStudioGames.ItemsSource = gamesView;
+
+            } 
+            catch (Exception) 
+            {
+                return;
+            }
+
+        }
+
+        private void dataGridUsers_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.A)
+            {
+                if(ApplicationConsts.User.AdminLevel == 1)
+                {
+                    MessageBox.Show("Admin");
+                }
+            }
+        }
+
+        private async void dataGridGenres_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.A)
+            {
+                if (ApplicationConsts.User.AdminLevel == 1)
+                {
+                    GenreEdit genreEdit = new GenreEdit();
+                    genreEdit.ShowDialog();
+                    updateEverything();
+                }
+            }
+
+            else if(e.Key == Key.E)
+            {
+                if (ApplicationConsts.User.AdminLevel == 1)
+                {
+                    GenreView genre = (GenreView)dataGridGenres.SelectedItem;
+                    GenreEdit genreEdit = new GenreEdit(genre.Id);
+                    genreEdit.ShowDialog();
+                    updateEverything();
+                }
+            }
+
+            else if (e.Key == Key.D)
+            {
+                if (ApplicationConsts.User.AdminLevel == 1)
+                {
+                    GenreView genre = (GenreView)dataGridGenres.SelectedItem;
+                    if (MessageBox.Show($"Do you want to delete the {genre.Name}?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+                    {
+                        MessageBox.Show("Denied");
+                    }
+                    else
+                    {
+                        string response = await Requests.Delete(ConstantSettings.GetGenreId + $"{genre.Id}/");
+                        if(response.Contains("OK"))
+                        {
+                            MessageBox.Show("Deleted");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Problems");
+                        }                        
+                    }
+                    updateEverything();
+                }
+            }
+        }
+
+        private async void dataGridStudios_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.A)
+            {
+                if (ApplicationConsts.User.AdminLevel == 1)
+                {
+                    StudioEdit studioEdit = new StudioEdit();
+                    studioEdit.ShowDialog();
+                    updateEverything();
+                }
+            }
+
+            else if (e.Key == Key.E)
+            {
+                if (ApplicationConsts.User.AdminLevel == 1)
+                {
+                    try
+                    {
+                        GenreView genre = (GenreView)dataGridGenres.SelectedItem;
+                        GenreEdit genreEdit = new GenreEdit(genre.Id);
+                        genreEdit.ShowDialog();
+                        updateEverything();
+                    }
+                    catch (Exception) { return; }                       
+
+                }
+            }
+
+            else if (e.Key == Key.D)
+            {
+                if (ApplicationConsts.User.AdminLevel == 1)
+                {
+                    GenreView genre = (GenreView)dataGridGenres.SelectedItem;
+                    if (MessageBox.Show($"Do you want to delete the {genre.Name}?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+                    {
+                        MessageBox.Show("Denied");
+                    }
+                    else
+                    {
+                        string response = await Requests.Delete(ConstantSettings.GetGenreId + $"{genre.Id}/");
+                        if (response.Contains("OK"))
+                        {
+                            MessageBox.Show("Deleted");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Problems");
+                        }
+
+                    }
+                    updateEverything();
+                }
+            }
+        }
+
+        private void dataGridGames_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.A)
+            {
+                if (ApplicationConsts.User.AdminLevel == 1)
+                {
+                    GameEdit gameEdit = new GameEdit();
+                    gameEdit.ShowDialog();
+                    
+                    updateEverything();
+                }
+            }
+        }
+
+        private void dataGridGames_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            GameView game = (GameView)dataGridGames.SelectedItem;
+
+            GamePage gamePage = new GamePage(game.Id);
+            gamePage.ShowDialog();
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.F5)
+            {
+                updateEverything();
+            }
         }
     }
 }

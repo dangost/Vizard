@@ -8,15 +8,15 @@ namespace Vizard.Models
 {
     class User
     {
-        public User(string name, string email,  string password, string avatar = "", string telegram = "", string steam = "")
+        public User(string name, string email,  string password, string avatar = "", string telegram = "", string steam = "", int admin = 0)
         {
             Name = name;
             Email = email;
-            AdminLevel = 0;
             Avatar = avatar;
             PassHash = password;
             Telegram = telegram;
             Steam = steam;
+            AdminLevel = admin;
         }
 
         public int? Id { get; set; }

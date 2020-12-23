@@ -8,7 +8,7 @@ namespace Vizard.Consts
 {
     public class ConstantSettings
     {
-        public const string IP = @"https://vizard-api.herokuapp.com";
+        public const string IP = @"http://127.0.0.1:5000";
 
         public static string UserLoginCheck = IP + "/api/Users/Login/";
 
@@ -37,5 +37,9 @@ namespace Vizard.Consts
         public static string SteamPicture = "https://logos-download.com/wp-content/uploads/2016/05/Steam_icon_logo_logotype.png";
 
         public static string TelegramPicture = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Telegram_logo.svg/1024px-Telegram_logo.svg.png";
+
+        public static string TorrentPicture = "https://avatars.mds.yandex.net/get-zen_doc/1904927/pub_5e74af25bc286c6a447ea78e_5e74b6f82cb8ec61326149cb/scale_1200";
+
+        public static string Play = "https://sun9-8.userapi.com/c628827/u192419046/video/y_342f1673.jpg";
     }
 }

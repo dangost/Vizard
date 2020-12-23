@@ -1,16 +1,26 @@
 from .model import Studio
 from application.entities.abstract.base_repository import BaseRepository
+from ..games.model import Game
 
 
 class StudiosRepository(BaseRepository):
     def get_all(self):
-        return self.db.studios
+        studios = self.db.get_all(Studio)
+        return studios
 
     def get_id(self, item_id):
-        for each in self.db.studios:
-            if each.studio_id == item_id:
-                return each
+        studio = self.db.get_by_id(Studio, item_id)
+        if studio is not None:
+            return studio
         return "No such Id"
+
+    def get_studio_games(self, studio_id):
+        studio_games = []
+        games = self.db.get_all(Game)
+        for game in games:
+            if game.studio_id == studio_id:
+                studio_games.append(game)
+        return studio_games
 
     def find(self, condition):
         res = []
@@ -25,21 +35,15 @@ class StudiosRepository(BaseRepository):
         return "OK"
 
     def replace(self, studio, studio_id):
-        for i in range(len(self.db.studios)):
-            if self.db.studios[i].studio_id == studio_id:
-                late = self.db.studios[i]
-                self.db.studios[i] = studio
-                self.db.replace(studio, late)
-                return "OK"
-        return "No such Id"
+        temp = self.get_id(studio_id)
+        if temp == "No such Id":
+            return temp
+        self.db.update(Studio, Studio.studio_id, studio_id, studio)
+        return "OK"
 
     def remove(self, studio_id: int):
-        try:
-            for i in self.db.studios:
-                if i.studio_id == studio_id:
-                    self.db.delete(i)
-                    self.db.studios.remove(i)
-                    return "OK"
-        except Exception:
-            return "Exception"
-        return "No such Id"
+        temp = self.get_id(studio_id)
+        if temp == "No such Id":
+            return temp
+        self.db.delete(temp)
+        return "OK"

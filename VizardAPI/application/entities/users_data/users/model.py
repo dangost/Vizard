@@ -20,19 +20,32 @@ class User(Base):
 
     user_id = Column("id", Integer, primary_key=True, unique=True)
 
-    name = Column("name", String)
+    name = Column("name", String(255))
 
-    email = Column("email", String)
+    email = Column("email", String(255))
 
-    pass_hash = Column("passHash", String)
+    pass_hash = Column("passHash", String(255))
 
     admin_level = Column("admin", Integer)
 
-    avatar = Column("avatar", String)
+    avatar = Column("avatar", String(255))
 
-    telegram = Column("telegram", String)
+    telegram = Column("telegram", String(255))
 
-    steam = Column("steam", String)
+    steam = Column("steam", String(255))
+
+    def json(self, id):
+        json = {
+            "user_id": id,
+            "name": self.name,
+            "email": self.email,
+            "pass_hash": self.pass_hash,
+            "admin_level": self.admin_level,
+            "avatar": self.avatar,
+            "telegram": self.telegram,
+            "steam": self.steam
+        }
+        return json
 
 
 class UserAuth:

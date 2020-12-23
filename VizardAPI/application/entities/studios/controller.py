@@ -4,10 +4,11 @@ from .schema import StudioSchema
 from application.app import base
 from application.entities.abstract.base_repository import BaseRepository
 from ..games.schema import GameSchema
+import time
 
 studios_controller_api = Blueprint('studios_controller_api', __name__)
 
-rep: BaseRepository = StudiosRepository(base)
+rep: StudiosRepository = StudiosRepository(base)
 
 
 @studios_controller_api.route("/api/Studios/" or "/api/Studios", methods=['GET'])
@@ -26,10 +27,7 @@ def get_studio_id(studio_id):
 
 @studios_controller_api.route("/api/Studios/StudioGames/<int:studio_id>/")
 def get_studio_games(studio_id):
-    games = []
-    for game in base.games:
-        if game.studio_id == studio_id:
-            games.append(game)
+    games = rep.get_studio_games(studio_id)
     return jsonify(GameSchema(many=True).dump(games))
 
 
@@ -44,7 +42,7 @@ def post_studio():
 @studios_controller_api.route("/api/Studios/<int:studio_id>/" or "/api/Studios/<int:studio_id>", methods=['PUT'])
 def put_studio(studio_id):
     json_data = request.get_json()
-    studio = StudioSchema(many=True).load(json_data)
+    studio = StudioSchema(many=False).load(json_data)
     result = rep.replace(studio, studio_id)
     return result
 

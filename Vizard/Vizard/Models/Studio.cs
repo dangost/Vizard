@@ -10,7 +10,6 @@ namespace Vizard.Models
     {
         public Studio(string name, string avatar, string description)
         {
-            Id = null;
             Name = name;
             Avatar = avatar;
             Description = description;

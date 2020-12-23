@@ -1,0 +1,26 @@
+﻿<Window x:Class="Vizard.GamePage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Vizard"
+        mc:Ignorable="d"
+        Title="GamePage" Height="450" Width="800">
+    <Grid>
+        <Image x:Name="imageAvatar" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100" Margin="37,27,0,0"/>
+        <Label x:Name="labelName" Content="Name" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="156,43,0,0" Width="191" Height="45" FontFamily="Yu Gothic" FontSize="20" FontWeight="Bold"/>
+        <TextBlock x:Name="descriptionTextblock" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Height="98" Width="255" Margin="40,203,0,0" FontFamily="Yu Gothic"><Run Text="Description"/></TextBlock>
+        <TextBlock x:Name="systemReq" HorizontalAlignment="Left" TextWrapping="Wrap" Text="system" VerticalAlignment="Top" Height="97" Width="255" Margin="416,189,0,0" FontFamily="Yu Gothic"/>
+        <Label x:Name="label" Content="Price:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="46,144,0,0" FontFamily="Yu Gothic" FontSize="14"/>
+        <Label x:Name="labelPrice" Content="30$" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="108,147,0,0"/>
+        <Image x:Name="imageSteam" HorizontalAlignment="Left" Height="36" VerticalAlignment="Top" Width="36" Margin="444,319,0,0" MouseDown="imageSteam_MouseDown"/>
+        <Image x:Name="imageTorrent" HorizontalAlignment="Left" Height="36" VerticalAlignment="Top" Width="36" Margin="586,319,0,0" MouseDown="imageTorrent_MouseDown"/>
+        <Label x:Name="label1" Content="Platforms:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,314,0,0" FontFamily="Yu Gothic"/>
+        <TextBlock x:Name="platformTextblock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="platforms" VerticalAlignment="Top" Width="154" Margin="126,319,0,0" Height="90" FontFamily="Yu Gothic"/>
+        <Image x:Name="imageStudio" HorizontalAlignment="Left" Height="85" VerticalAlignment="Top" Width="85" Margin="487,42,0,0"/>
+        <Label x:Name="labelStudioName" Content="StudioName
+               " HorizontalAlignment="Left" VerticalAlignment="Top" Width="184" Margin="586,50,0,0" Height="55" FontFamily="Yu Gothic" FontSize="14" FontWeight="Bold"/>
+        <Label x:Name="labelGenre" Content="Genre" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="216,86,0,0" Width="79"/>
+        <Image x:Name="image" HorizontalAlignment="Left" Height="37" VerticalAlignment="Top" Width="37" Margin="507,319,0,0" MouseDown="image_MouseDown"/>
+    </Grid>
+</Window>

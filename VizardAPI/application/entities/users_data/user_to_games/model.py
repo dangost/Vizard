@@ -15,3 +15,11 @@ class UserToGames(Base):
     user_id = Column("userId", Integer, ForeignKey("Users.id"))
 
     game_id = Column("gameId", Integer, ForeignKey("Games.id"))
+
+    def json(self, id):
+        json = {
+            "key": id,
+            "user_id": self.user_id,
+            "game_id": self.game_id
+        }
+        return json

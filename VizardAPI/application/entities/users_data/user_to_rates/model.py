@@ -18,3 +18,12 @@ class UserToRates(Base):
     game_id = Column("gameId", Integer, ForeignKey("Games.id"))
 
     rate = Column("rate", Integer)
+
+    def json(self, id):
+        json = {
+            "key": id,
+            "user_id": self.user_id,
+            "game_id": self.game_id,
+            "rate": self.rate
+        }
+        return json

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Vizard"
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="1000" WindowStartupLocation="CenterScreen">
+        Title="Vizard" Height="700" Width="1000" WindowStartupLocation="CenterScreen" KeyDown="Window_KeyDown">
     <Grid>
         <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="669" VerticalAlignment="Top" Width="992">
             <TabItem Header="Games">
@@ -14,16 +14,16 @@
                         <ColumnDefinition Width="9"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <DataGrid  x:Name="dataGridGames" ColumnWidth="*" HorizontalAlignment="Left" Height="621" VerticalAlignment="Top" Width="966" Margin="0,10,0,0" Grid.Column="1"/>
+                    <DataGrid IsReadOnly="True" x:Name="dataGridGames" ColumnWidth="*" HorizontalAlignment="Left" Height="621" VerticalAlignment="Top" Width="966" Margin="0,10,0,0" Grid.Column="1" KeyDown="dataGridGames_KeyDown" MouseDoubleClick="dataGridGames_MouseDoubleClick"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Studios">
                 <Grid Background="#FFE5E5E5">
 
-                    <TextBlock x:Name="textBlockStudioDescription" HorizontalAlignment="Left" TextWrapping="Wrap" Text="studioDescription" VerticalAlignment="Top" Height="121" Width="430" Margin="369,160,0,0" FontFamily="Yu Gothic" FontSize="18"/>
+                    <TextBlock x:Name="textBlockStudioDescription" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="121" Width="430" Margin="369,160,0,0" FontFamily="Yu Gothic" FontSize="18"/>
 
-                    <DataGrid IsReadOnly="True" ColumnWidth="*" x:Name="dataGridStudios" HorizontalAlignment="Left" Height="621" VerticalAlignment="Top" Width="235" Margin="10,10,0,0" SelectionChanged="dataGridStudios_SelectionChanged"/>
-                    <Label x:Name="labelStudioName" Content="studioName" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="369,54,0,0" Width="181" FontFamily="Yu Gothic" FontSize="22"/>
+                    <DataGrid IsReadOnly="True" ColumnWidth="*" x:Name="dataGridStudios" HorizontalAlignment="Left" Height="621" VerticalAlignment="Top" Width="235" Margin="10,10,0,0" SelectionChanged="dataGridStudios_SelectionChanged" KeyDown="dataGridStudios_KeyDown"/>
+                    <Label x:Name="labelStudioName" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="369,54,0,0" Width="181" FontFamily="Yu Gothic" FontSize="22"/>
                     <DataGrid x:Name="dataGridStudioGames" HorizontalAlignment="Left" Height="260" VerticalAlignment="Top" Width="430" Margin="369,347,0,0"/>
                     <Image x:Name="imageStudioAvatar" HorizontalAlignment="Left" Height="131" VerticalAlignment="Top" Width="130" Margin="748,29,0,0"/>
                 </Grid>
@@ -31,22 +31,22 @@
 
             <TabItem Header="Genres">
                 <Grid Background="#FFE5E5E5">
-                    <DataGrid IsReadOnly="True" ColumnWidth="*" x:Name="dataGridGenres" HorizontalAlignment="Left" Height="621" VerticalAlignment="Top" Width="235" Margin="10,10,0,0" SelectionChanged="dataGridGenres_SelectionChanged"/>
-                    <Label x:Name="labelGenreName" Content="Name" HorizontalAlignment="Left" VerticalAlignment="Top" Width="238" Margin="491,42,0,0" FontFamily="Yu Gothic" FontSize="24"/>
-                    <TextBlock x:Name="textBlockGenreDescription" HorizontalAlignment="Left" TextWrapping="Wrap" Text="genreDescription" VerticalAlignment="Top" Height="341" Width="430" Margin="394,160,0,0" FontFamily="Yu Gothic" FontSize="18"/>
+                    <DataGrid IsReadOnly="True" ColumnWidth="*" x:Name="dataGridGenres" HorizontalAlignment="Left" Height="621" VerticalAlignment="Top" Width="235" Margin="10,10,0,0" SelectionChanged="dataGridGenres_SelectionChanged" KeyDown="dataGridGenres_KeyDown"/>
+                    <Label x:Name="labelGenreName" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Width="238" Margin="491,42,0,0" FontFamily="Yu Gothic" FontSize="24"/>
+                    <TextBlock x:Name="textBlockGenreDescription" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="341" Width="430" Margin="394,160,0,0" FontFamily="Yu Gothic" FontSize="18"/>
 
                 </Grid>
             </TabItem>
 
             <TabItem Header="Users">
                 <Grid Background="#FFE5E5E5">
-                    <DataGrid IsReadOnly="True" ColumnWidth="*" x:Name="dataGridUsers" HorizontalAlignment="Left" Height="621" VerticalAlignment="Top" Width="235" Margin="10,10,0,0" SelectionChanged="dataGridUsers_SelectionChanged"/>
+                    <DataGrid IsReadOnly="True" ColumnWidth="*" x:Name="dataGridUsers" HorizontalAlignment="Left" Height="621" VerticalAlignment="Top" Width="235" Margin="10,10,0,0" SelectionChanged="dataGridUsers_SelectionChanged" KeyDown="dataGridUsers_KeyDown"/>
                     <Image x:Name="imageUserAvatar" HorizontalAlignment="Left" Height="150" VerticalAlignment="Top" Width="150" Margin="305,10,0,0"/>
-                    <Label x:Name="labelUserName" Content="Name" HorizontalAlignment="Left" VerticalAlignment="Top" Width="204" Margin="513,30,0,0" FontFamily="Yu Gothic" FontSize="24"/>
-                    <Label x:Name="labelUserEmail" Content="Email" HorizontalAlignment="Left" VerticalAlignment="Top" Width="204" Margin="560,96,0,0" FontFamily="Yu Gothic" FontSize="16"/>
+                    <Label x:Name="labelUserName" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Width="204" Margin="513,30,0,0" FontFamily="Yu Gothic" FontSize="24"/>
+                    <Label x:Name="labelUserEmail" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Width="307" Margin="560,96,0,0" FontFamily="Yu Gothic" FontSize="16"/>
                     <Image x:Name="imageTelegram" HorizontalAlignment="Left" Height="50" VerticalAlignment="Top" Width="50" Margin="560,162,0,0"/>
-                    <Label x:Name="labelUserTeleram" Content="Telegram" HorizontalAlignment="Left" VerticalAlignment="Top" Width="204" Margin="645,162,0,0" FontFamily="Yu Gothic" FontSize="16"/>
-                    <Image x:Name="imageSteam" HorizontalAlignment="Left" Height="64" VerticalAlignment="Top" Width="64" Margin="849,148,0,0" MouseDown="imageSteam_MouseDown"/>
+                    <Label x:Name="labelUserTeleram" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Width="245" Margin="645,162,0,0" FontFamily="Yu Gothic" FontSize="16"/>
+                    <Image x:Name="imageSteam" HorizontalAlignment="Left" Height="64" VerticalAlignment="Top" Width="64" Margin="895,105,0,0" MouseDown="imageSteam_MouseDown"/>
                     <DataGrid ColumnWidth="*" x:Name="dataGridSelectedUserGames" HorizontalAlignment="Left" Height="230" VerticalAlignment="Top" Width="448" Margin="369,350,0,0"/>
                 </Grid>
             </TabItem>
@@ -55,7 +55,7 @@
                 <Grid Background="#FFE5E5E5">
                     <Image x:Name="userAvatar" HorizontalAlignment="Left" Height="165" VerticalAlignment="Top" Width="165" Margin="105,28,0,0"/>
                     <Label x:Name="labelName" Content="Name" HorizontalAlignment="Left" VerticalAlignment="Top" Width="388" Margin="293,56,0,0" FontFamily="Yu Gothic" FontSize="48" Height="80"/>
-                    <Label x:Name="labelEmail" Content="Email" HorizontalAlignment="Left" VerticalAlignment="Top" Width="184" Margin="359,155,0,0" Height="38" FontFamily="Yu Gothic UI Semibold" FontSize="20"/>
+                    <Label x:Name="labelEmail" Content="Email" HorizontalAlignment="Left" VerticalAlignment="Top" Width="395" Margin="359,155,0,0" Height="38" FontFamily="Yu Gothic UI Semibold" FontSize="20"/>
                     <DataGrid ColumnWidth="*" x:Name="dataGridUserGames" HorizontalAlignment="Left" Height="238" VerticalAlignment="Top" Width="430" Margin="293,266,0,0"/>
                     <Button x:Name="button" Content="Edit" HorizontalAlignment="Left" VerticalAlignment="Top" Width="102" Margin="824,87,0,0" Height="44" FontFamily="Yu Gothic" FontSize="22" Click="button_Click"/>
                 </Grid>

@@ -14,8 +14,8 @@ class Database(BaseDatabase):
     session: sessionmaker() = 1
     engine = 1
 
-    def __init__(self, base_path: str):
-        self.engine = create_engine('sqlite:///' + base_path+'?check_same_thread=False', echo=True)
+    def __init__(self, base_path):
+        self.engine = create_engine(base_path, echo=True)
 
     def load(self):
         Base.metadata.create_all(self.engine)
@@ -39,10 +39,16 @@ class Database(BaseDatabase):
         self.session.delete(instance)
         self.save()
 
-    def update(self, instance, late_instance):
-        self.delete(late_instance)
-        self.add(instance)
+    def update(self, instance, inst_id, id, obj):
+        self.session.query(instance).filter(inst_id == id).update(obj.json(id))
+        self.save()
 
     def save(self):
         self.session.commit()
         pass
+
+    def get_all(self, instance):
+        return self.session.query(instance).all()
+
+    def get_by_id(self, instance, id):
+        return self.session.query(instance).get(id)

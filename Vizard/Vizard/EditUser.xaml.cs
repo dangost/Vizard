@@ -62,8 +62,9 @@ namespace Vizard
             string telegram = textBoxTelegram.Text;
             string steam = textBoxSteam.Text;
             string password = passwordBox.Password;
+            int admin = ApplicationConsts.User.AdminLevel;
 
-            user = new User(name, email, password, avatar, telegram, steam); user.Id = id;
+            user = new User(name, email, password, avatar, telegram, steam, admin:admin); user.Id = id;
 
             string userJson = JsonConvert.SerializeObject(user);
 
