@@ -44,3 +44,8 @@ def put_game(game_id):
 def delete_game(game_id):
     result = rep.remove(game_id)
     return result
+
+
+@games_controller_api.route("/ip/", methods=['GET'])
+def ip():
+    return jsonify({'ip': request.remote_addr}), 200
